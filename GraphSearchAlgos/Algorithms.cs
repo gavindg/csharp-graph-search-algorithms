@@ -1,26 +1,44 @@
+using System.Transactions;
+
 namespace GraphSearchAlgos;
 
 public static class Algorithms
 {
     public static int BreadthFirstSearch(Graph graph, string start, string stop)
     {
-        HashSet<Node> discovery = new HashSet<Node>();
+        graph.UnvisitAll();
+        int length = 1;
+        Queue<Node> currentLayer = new Queue<Node>();
         Node startNode = graph.FindNode(start);
-        discovery.Add(startNode);
-
-        while (discovery.Count > 0)
+        if (startNode == null)
         {
-            // remove a node at random from discovery = current
-            // visit it
-            // for each node adjacent to current
-                // if not visited
-                    // if current.Label == stop
-                        // done
-                    // else
-                        // visit it
-                        // add it to discovery.
+            return -1;
         }
         
-        return 0; // stub
+        currentLayer.Enqueue(startNode);
+
+        while (currentLayer.Count > 0)
+        {
+            Node current = currentLayer.Dequeue();
+            current.Visit();
+            
+            // check each node that neighbors the current...
+            foreach (Node node in current.Connections)
+            {
+                if (!node.IsVisited())
+                {
+                    if (node.Label == stop)
+                    {
+                        // done
+                        return length;
+                    }
+                    currentLayer.Enqueue(node);
+                }
+            }
+            
+            length++;
+        }
+        
+        return -1;  // invalid: end node does not exist...
     }
 }

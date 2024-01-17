@@ -1,23 +1,25 @@
 namespace GraphSearchAlgos;
 using System.Collections;
 
-public struct Node
+public class Node
 {
     public string Label { get; set; }
     public List<Node> Connections;
-    private bool isVisited = false;
-    private bool valid = true;
+    private bool _visited = false;
     
 
-    public Node(string label, bool errorStatus=false)
+    public Node(string label)
     {
         Connections = new List<Node>();
         Label = label;
-        valid = !errorStatus;
+
     }
 
-    public bool Validate()
+    public void Visit() => _visited = true;
+    public void UnVisit() => _visited = false;
+
+    public bool IsVisited()
     {
-        return valid;
+        return _visited;
     }
 }
