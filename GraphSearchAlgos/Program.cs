@@ -1,7 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using GraphSearchAlgos;
 
-BreadthFirstSearchTests();
+// BreadthFirstSearchTests();
+DepthFirstSearchTests();
+
+void DepthFirstSearchTests()
+{
+    Graph graph = new Graph(example: true);
+    
+    Console.WriteLine("[Test] Possible path from A to E -- A:B:C:D:E : " + 
+                      Algorithms.DepthFirstSearch(graph, "A", "E").Equals("A:B:C:D:E"));
+    Console.WriteLine("[Test] No path from A to Z -- Z dne : " + 
+                      Algorithms.DepthFirstSearch(graph, "A", "Z").Equals(""));
+    Console.WriteLine("[Test] Possible path from W to E -- A:B:C:D:E : " +
+                      Algorithms.DepthFirstSearch(graph, "W", "E").Equals(""));
+}
 
 // some tests for breadth-first search...
 void BreadthFirstSearchTests()

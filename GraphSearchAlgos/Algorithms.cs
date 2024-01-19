@@ -1,9 +1,43 @@
-using System.Transactions;
-
 namespace GraphSearchAlgos;
 
 public static class Algorithms
 {
+    public static string DepthFirstSearch(Graph graph, string start, string stop)
+    {
+        graph.UnvisitAll();
+        Node startNode = graph.FindNode(start);
+
+        if (startNode == null)
+        {
+            return "";
+        }
+
+        bool done = false;
+        return DepthFirstSearch(startNode, stop, done: ref done);
+    }
+
+    private static string DepthFirstSearch(Node current, string stop, ref bool done)
+    {
+        if (!current.IsVisited())
+        {
+            current.Visit();
+            if (current.Label == stop)
+            {
+                done = true;
+                return current.Label;
+            }
+            foreach (Node n in current.Connections)
+            {
+                string path = DepthFirstSearch(n, stop, ref done);
+                if (done)
+                {
+                    return current.Label + ":" + path;
+                }
+            }
+        }
+        return "";
+    }
+    
     public static int BreadthFirstSearch(Graph graph, string start, string stop)
     {
         graph.UnvisitAll();
